@@ -86,7 +86,54 @@ class Bank:
                 Bank.__update()
                 print('Amount Withdraw Successfully')
 
+    def  showdetails(self):
+        accnumber = input("please tell your account number:- ")
+        pin = int(input("please tell your pin number :-"))
+        userdata = [i for i in Bank.data if i['accountNo.'] == accnumber and i['pin'] == pin]
+        print(userdata)
+        if not userdata :
+            print('userdata not found')
+        else:
+            print( f"your data showing successfully :- \n\n {userdata[0]}")
 
+    def updatedetails(self):
+        accnumber = input("please tell your account number:- ")
+        pin = int(input("please tell your pin number :-"))
+        userdata = [i for i in Bank.data if i['accountNo.'] == accnumber and i['pin'] == pin]
+        
+        if not userdata :
+            print('userdata not found')
+        else:
+            print( f"you can change age , accountNo. balance")
+            print( f"Fill the details for change or leave it empty if no change")
+
+            newData = {
+                "name" : input("please tell your new name or press enter to skipp"),
+                "email" : input("please tell your new email or press enter to skipp"),
+                "pin" : input("please tell your new pin or press enter to skipp"),
+            }
+            if newData["name"] == "":
+                newData['name'] = userdata[0]['name']
+            if newData["email"] == "":
+                newData['email'] = userdata[0]['email']
+            if newData["pin"] == "":
+                newData['pin'] = userdata[0]['pin']
+            
+            newData['age'] = userdata[0]['age']
+            newData['accountNo.'] = userdata[0]['accountNo.']
+            newData['balance'] = userdata[0]['balance']
+            if type(newData['pin']) == int:
+                newData['pin'] = int[newData['pin']]   
+            
+            for i in newData:
+                if newData[i] == userdata[0][i]:
+                    continue
+                else:
+                    userdata[0][i] = newData[i]
+
+            Bank.__update()
+            print("details updated succefully")
+                
 
 
 user = Bank()
@@ -107,3 +154,9 @@ if check == 2:
 
 if check == 3:
     user.withdrawemoney()
+
+if check == 4:
+    user.showdetails()
+
+if check == 5:
+    user.updatedetails()
